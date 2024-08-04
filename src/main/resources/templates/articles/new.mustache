@@ -1,0 +1,17 @@
+{{>layouts/header}}
+
+<!--이 폼에서 보낸 데이터를 받기 위한 컨트롤러를 작성-->
+<form class="container" action="/articles/create" method="post"> <!--form데이터는 무조건 post-->
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" name="title">  <!--dto의 필드명과 동일한 name 변수를 꼭 작성해야 한다 dto와 연결이 되어서 전달이 되는건다-->
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Content</label>
+        <textarea class="form-control" rows="3" name="content"></textarea>  <!--dto의 필드명과 동일한 name 변수를 꼭 작성해야 한다 dto와 연결이 되어서 전달이 되는건다-->
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/articles">Back</a>
+</form>
+{{>layouts/footer}}

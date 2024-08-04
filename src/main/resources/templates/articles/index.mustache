@@ -1,0 +1,23 @@
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {{#articleList}}  <!--articleList 사용범위를 무조건 지정. articleList는 데이터 묶음이므로 mustache는 <tr></tr> 부분은 반복적으로 보임으로써 데이터를 순차적으로 다 보여줄수 있게 한다.-->
+    <tr>
+        <th>{{id}}</th>
+        <td><a href="/articles/{{id}}">{{title}}</a></td> <!--title을 클릭했을떄 해당 show.mustache로 이동하게 링크를 지정-->
+        <td>{{content}}</td>
+    </tr>
+    {{/articleList}}
+    </tbody>
+</table>
+<a href="/articles/new">New Article</a> <!--Link의 역할-->
+
+{{>layouts/footer}}

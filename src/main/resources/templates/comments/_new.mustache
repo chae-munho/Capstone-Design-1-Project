@@ -1,0 +1,56 @@
+
+<div class="card m-2" id="comments-new">
+    <div class="card-body">
+        <!--댓글 작성 폼-->
+        <form autocomplete="off">
+            <div class="mb-3">
+                <label class="form-label">닉네임</label>
+                <input class="form-control form-control-sm" id="new-comment-nickname">
+            </div>
+            <!--댓글 본문 입력-->
+            <div class="mb-3">
+                <label class="form-label">댓글 내용</label>
+                <textarea class="form-control form-control-sm" rows="3" id="new-comment-body"></textarea>
+            </div>
+            <!--히든 인풋-->
+            {{#article}}
+                <input type="hidden" id="new-comment-article-id" value="{{id}}">
+            {{/article}}
+            <!--댓글은 게시글에 포함되니까 그 article의 아이디를 보이지는 않지만 가지고는 있어야 하므로 hidden으로 숨긴다.-->
+            <!--전송 버튼-->
+            <button type="button" class="btn btn-outline-primary btn-sm" id="comment-create-btn">댓글 작성</button>
+            <!--버튼을 클릭했을때 댓글이 작성될수 있게 하는 연결고리를 자바스크립트로 작성한다.-->
+        </form>
+    </div>
+</div>
+<script>
+{
+    //댓글 생성 버튼 변수화 id가 comment-crate-btn인 대상
+   const commentCreateBtn = document.querySelector("#comment-create-btn");
+   //댓글 클릭 이벤트 감지!
+   commentCreateBtn.addEventListener("click", function() {
+        // 새 댓글 객체 생성
+        const comment = {
+            nickname : document.querySelector("#new-comment-nickname").value,
+            body : document.querySelector("#new-comment-body").value,
+            article_id : document.querySelector("#new-comment-article-id").value
+        };
+        //댓글 객체를 출력
+        console.log(comment);
+        //fetch() -Talend API 요청을 javascript로 보내준다(Rest Api) comment.articleId의 comment는 위의 comment
+        const url = "/api/articles/" + comment.article_id + "/comments";
+        fetch(url, {
+            method : "post", //post 요청
+            body : JSON.stringify(comment),  //comment JS 객체를 JSON으로 변경하여 전송
+            headers : {
+                "Content-Type" : "application/json"  //body에 실어서 보낸게 json타입이라는 뜻
+                }
+            }).then(response => {
+                //http 응답 코드에 따른 메세지 출력
+                const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글 등록 실패";
+                alert(msg);
+                window.location.reload(); //현재 페이지 새로 고침
+             });
+   });
+}
+</script>
